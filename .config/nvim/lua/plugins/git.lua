@@ -19,7 +19,7 @@ return {
             -- Set a vim motion to <Space> + g + a to add the current file and changes to the staging area
             vim.keymap.set("n", "<leader>ga", "Git add", {desc = "[G]it [A]dd"})
             -- Set a vim motion to <Space> + g + c to commit the current chages
-            vim.keymap.set("n", "<leader>gc", ":Git commit", {desc = "[G]it [C]ommit"})
+            vim.keymap.set("n", "<leader>gs", ":Git commit", {desc = "[G]it [C]ommit"})
             -- Set a vim motion to <Space> + g + p to push the commited changes to the remote repository
             vim.keymap.set("n", "<leader>gp", "Git push", {desc = "[G]it [P]ush"})
         end

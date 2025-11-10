@@ -11,7 +11,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "tsserver", "jdtls", "html", "cssls", "pyright", "emmet_ls", "tailwindcss" },
+                ensure_installed = { "lua_ls", "html", "ts_ls", "cssls", "pyright", "emmet_ls", "tailwindcss" },
             })
         end
     },
@@ -24,46 +24,27 @@ return {
             })
         end
     },
-    -- mason nvim dap utilizes mason to automatically ensure debug adapters you want installed are installed, mason-lspconfig will not automatically install debug adapters for us
-    {
-        "jay-babu/mason-nvim-dap.nvim",
-        config = function()
-            -- ensure the java debug adapter is installed
-            require("mason-nvim-dap").setup({
-                ensure_installed = { "java-debug-adapter", "java-test" }
-            })
-        end
-    },
-    -- utility plugin for configuring the java language server for us
-    {
-        "mfussenegger/nvim-jdtls",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-        }
-    },
     {
         "neovim/nvim-lspconfig",
         config = function()
             -- get access to the lspconfig plugins functions
-            local lspconfig = require("lspconfig")
-
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             -- setup the lua language server
-            lspconfig.lua_ls.setup({
+            vim.lsp.config('lua_ls', {
                 capabilities = capabilities,
             })
 
             -- setup the typescript language server
-            lspconfig.tsserver.setup({
+            vim.lsp.config('tsserver', {
                 capabilities = capabilities,
             })
 
-            lspconfig.html.setup({
+            vim.lsp.config('html', {
                 capabilities = capabilities,
             })
 
-            lspconfig.pyright.setup({
+            vim.lsp.config('pyright', {
                 capabilities = capabilities,
             })
 
