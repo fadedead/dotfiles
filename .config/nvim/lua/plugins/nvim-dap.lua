@@ -1,32 +1,70 @@
 return {
     "mfussenegger/nvim-dap",
     dependencies = {
-        -- ui plugins to make debugging simplier
         "rcarriga/nvim-dap-ui",
-        "nvim-neotest/nvim-nio"
+        "nvim-neotest/nvim-nio",
+        "mfussenegger/nvim-dap-python",
+        {
+            "microsoft/vscode-js-debug",
+            build = "npm install --legacy-peer-deps --ignore-scripts && npx gulp vsDebugServerBundle && mv dist out",
+        },
+        "mxsdev/nvim-dap-vscode-js",
     },
     config = function()
-        -- gain access to the dap plugin and its functions
         local dap = require("dap")
-        -- gain access to the dap ui plugin and its functions
         local dapui = require("dapui")
 
-        -- Setup the dap ui with default configuration
         dapui.setup()
 
-         -- setup an event listener for when the debugger is launched
+        require("dap-python").setup("python")
+
+        require("dap-vscode-js").setup({
+            debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
+            adapters = { "pwa-node", "node-terminal" },
+        })
+
+        for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+            dap.configurations[language] = {
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Launch file",
+                    program = "${file}",
+                    cwd = "${workspaceFolder}",
+                },
+                {
+                    type = "pwa-node",
+                    request = "attach",
+                    name = "Attach",
+                    processId = require("dap.utils").pick_process,
+                    cwd = "${workspaceFolder}",
+                },
+                {
+                    type = "pwa-chrome",
+                    request = "launch",
+                    name = "Launch Chrome for Next.js",
+                    url = "http://localhost:3000",
+                    webRoot = "${workspaceFolder}",
+                    userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
+                },
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Debug Next.js (server)",
+                    runtimeExecutable = "npm",
+                    runtimeArgs = { "run", "dev" },
+                    cwd = "${workspaceFolder}",
+                    console = "integratedTerminal",
+                },
+            }
+        end
+
         dap.listeners.before.launch.dapui_config = function()
-            -- when the debugger is launched open up the debug ui
             dapui.open()
         end
 
-        -- set a vim motion for <Space> + d + t to toggle a breakpoint at the line where the cursor is currently on
         vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, { desc = "[D]ebug [T]oggle Breakpoint" })
-
-        -- set a vim motion for <Space> + d + s to start the debugger and launch the debugging ui
         vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "[D]ebug [S]tart" })
-
-        -- set a vim motion to close the debugging ui
-        vim.keymap.set("n", "<leader>dc", dapui.close, {desc = "[D]ebug [C]lose"})
-    end
+        vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "[D]ebug [C]lose" })
+    end,
 }

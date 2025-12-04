@@ -7,19 +7,20 @@ return {
         "MunifTanjim/nui.nvim",
     },
     config = function()
-        vim.keymap.set('n', '<leader>f', '<Cmd>Neotree toggle<CR>')
+        vim.keymap.set("n", "<leader>f", "<Cmd>Neotree toggle<CR>", { desc = "Toggle [F]ile tree" })
+
         require("neo-tree").setup({
             close_if_last_window = true,
             window = {
                 width = 60,
-                position = "float";
+                position = "float",
             },
             event_handlers = {
                 {
                     event = "file_opened",
-                    handler = function(file_path)
+                    handler = function()
                         require("neo-tree.command").execute({ action = "close" })
-                    end
+                    end,
                 },
             },
             filesystem = {
@@ -27,9 +28,9 @@ return {
                     visible = true,
                     show_hidden_count = true,
                     hide_dotfiles = false,
-                    hide_gitignored = true
-                }
-            }
+                    hide_gitignored = true,
+                },
+            },
         })
-    end
+    end,
 }

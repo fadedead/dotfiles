@@ -1,7 +1,6 @@
 return {
     "stevearc/conform.nvim",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
         local conform = require("conform")
 
@@ -20,6 +19,9 @@ return {
                 graphql = { "prettier" },
                 lua = { "stylua" },
                 python = { "isort", "black" },
+                terraform = { "terraform_fmt" },
+                tf = { "terraform_fmt" },
+                hcl = { "terraform_fmt" },
             },
             format_on_save = {
                 lsp_fallback = false,
@@ -27,5 +29,9 @@ return {
                 timeout_ms = 1000,
             },
         })
+
+        vim.keymap.set("n", "<leader>cf", function()
+            conform.format({ lsp_fallback = true })
+        end, { desc = "[C]ode [F]ormat" })
     end,
 }
