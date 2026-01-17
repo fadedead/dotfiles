@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 30,
+    "height": 34,
     "spacing": 6,
     "modules-left": [
         "custom/media_icon",
@@ -38,27 +38,34 @@
     "mpris": {
         "format": "{artist} - {title}",
         "format-paused": "{artist} - {title}",
+        "format-stopped": "",
         "max-length": 50,
         "tooltip-format": "{player}: {artist} - {title}"
     },
     "custom/media_icon": {
         "format": "󰝚",
+        "exec": "playerctl status 2>/dev/null && echo 'show'",
+        "interval": 1,
         "tooltip": false
     },
     "custom/playpause": {
         "format": "{}",
         "interval": 1,
-        "exec": "playerctl status 2>/dev/null | grep -q 'Playing' && echo '' || echo ''",
+        "exec": "playerctl status 2>/dev/null | grep -q 'Playing' && echo '' || (playerctl status 2>/dev/null | grep -q 'Paused' && echo '')",
         "on-click": "playerctl play-pause",
         "tooltip": false
     },
     "custom/prev": {
         "format": "",
+        "exec": "playerctl status 2>/dev/null && echo 'show'",
+        "interval": 1,
         "on-click": "playerctl previous",
         "tooltip": false
     },
     "custom/next": {
         "format": "",
+        "exec": "playerctl status 2>/dev/null && echo 'show'",
+        "interval": 1,
         "on-click": "playerctl next",
         "tooltip": false
     },
