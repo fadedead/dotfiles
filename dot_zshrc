@@ -1,9 +1,41 @@
 export PATH="$HOME/.local/bin:$PATH"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY
+setopt AUTO_CD
+setopt AUTO_LIST
+setopt AUTO_MENU
+
+autoload -Uz compinit
+if [[ ! -f ~/.zcompdump || -n $(find ~/.zcompdump -mtime +1 -print -quit 2>/dev/null) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
+alias l='ls -lah'
+alias ..='cd ..'
+alias grep='grep --color=auto'
 
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
-
-alias ls='ls --color=auto'
-alias l='ls -lah'
-alias ..='cd ..'

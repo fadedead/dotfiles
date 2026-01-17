@@ -106,6 +106,7 @@ config.inactive_pane_hsb = {
 
 config.enable_wayland = false
 config.default_workspace = 'main'
+config.default_prog = { 'zsh' }
 
 config.keys = {
 	{ key = 'Enter', mods = 'ALT',       action = act.SpawnTab 'CurrentPaneDomain' },
@@ -134,7 +135,7 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
 	if process then
 		process = process:match("([^/\\]+)$")
 	end
-	local title = (tab.tab_index + 1) .. ': ' .. (process or 'shell')
+	local title = (tab.tab_index + 1) .. ': ' .. (process or 'zsh')
 	local bg = colors.bg
 	local fg = colors.fg_dim
 	if tab.is_active then
