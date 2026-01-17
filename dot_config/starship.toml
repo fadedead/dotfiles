@@ -1,0 +1,24 @@
+add_newline = false
+format = "$directory$git_branch$git_status$all\n$character"
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = true
+format = "[$path]($style) "
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
+
+[git_branch]
+symbol = " "
+style = "bold magenta"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold magenta"
+format = "([$all_status$ahead_behind]($style) )"
+
+[line_break]
+disabled = true

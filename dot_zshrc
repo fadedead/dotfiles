@@ -1,0 +1,9 @@
+export PATH="$HOME/.local/bin:$PATH"
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+alias ls='ls --color=auto'
+alias l='ls -lah'
+alias ..='cd ..'
