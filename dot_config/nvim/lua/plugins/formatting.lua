@@ -22,7 +22,7 @@ return {
                 terraform = { "terraform_fmt" },
                 tf = { "terraform_fmt" },
                 hcl = { "terraform_fmt" },
-                go = { "gofumpt" },
+                go = { "gofumpt", "goimports" },
             },
             format_on_save = {
                 lsp_fallback = false,

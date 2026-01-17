@@ -17,14 +17,14 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         config = function()
             require("mason-tool-installer").setup({
-                ensure_installed = { "prettierd", "eslint_d", "debugpy", "black", "isort", "pylint", "tflint", "golangci-lint", "golangci-lint-langserver", "delve", "gofumpt" },
+                ensure_installed = { "prettierd", "eslint_d", "debugpy", "black", "isort", "pylint", "tflint", "golangci-lint", "golangci-lint-langserver", "delve", "gofumpt", "goimports" },
             })
         end,
     },
     {
         "neovim/nvim-lspconfig",
         config = function()
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local capabilities = require("blink.cmp").get_lsp_capabilities()
 
             vim.lsp.enable("lua_ls")
             vim.lsp.config("lua_ls", {
@@ -138,8 +138,8 @@ return {
             vim.keymap.set("n", "<leader>ch", vim.lsp.buf.hover, { desc = "[C]ode [H]over" })
             vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "[C]ode [D]efinition" })
             vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
-            vim.keymap.set("n", "<leader>cr", require("telescope.builtin").lsp_references, { desc = "[C]ode [R]eferences" })
-            vim.keymap.set("n", "<leader>ci", require("telescope.builtin").lsp_implementations, { desc = "[C]ode [I]mplementations" })
+            vim.keymap.set("n", "<leader>cr", function() Snacks.picker.lsp_references() end, { desc = "[C]ode [R]eferences" })
+            vim.keymap.set("n", "<leader>ci", function() Snacks.picker.lsp_implementations() end, { desc = "[C]ode [I]mplementations" })
             vim.keymap.set("n", "<leader>cR", vim.lsp.buf.rename, { desc = "[C]ode [R]ename" })
             vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "[C]ode [D]eclaration" })
         end,
