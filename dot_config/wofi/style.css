@@ -1,44 +1,53 @@
-/* Taken from https://github.com/TheTapo/hyprland-rice/tree/main/Catppuccin/wofi  */
-
-@define-color bg #161320;
-@define-color bg-hover #1E1E2E;
-@define-color blue #96CDFB;
-@define-color sky #89DCEB;
-@define-color red #F28FAD;
-@define-color pink #F5C2E7;
-@define-color lavender #C9CBFF;
-@define-color rosewater #F5E0DC;
-@define-color mauve #CBA6F7;
-@define-color fg #D9E0EE;
-@define-color green #ABE9B3;
-@define-color dark-fg #161320;
-@define-color peach #F8BD96;
+@define-color bg #000000;
+@define-color bg-hover #131b24;
+@define-color blue #569fba;
+@define-color sky #9ccfd8;
+@define-color red #eb6f92;
+@define-color pink #eb98c3;
+@define-color lavender #c4a7e7;
+@define-color rosewater #eae8ff;
+@define-color mauve #ccb1ed;
+@define-color fg #e0def4;
+@define-color green #a3be8c;
+@define-color dark-fg #191726;
+@define-color peach #ea9a97;
 @define-color border @blue;
-@define-color gray2 #6E6C7E;
-@define-color black4 #575268;
-@define-color black3 #302D41;
-@define-color maroon #E8A2AF;
+@define-color gray2 #817c9c;
+@define-color black4 #4b4673;
+@define-color black3 #121820;
+@define-color maroon #d84f76;
 
 #window {
   margin: 0px;
-
-  border-radius: 12px;
-  background-color: @bg;
-  font-family: "Fira Code";
+  background-color: rgba(0, 0, 0, 0);
+  font-family: "Hack Nerd Font";
   font-size: 16px;
-  background: rgb(30,30,46);
+}
+
+#outer-box {
+  margin: 5px;
+  border: none;
+  background-color: @bg;
+  border-radius: 12px;
+}
+
+#inner-box {
+  margin: 5px;
+  border: none;
+  background-color: @bg;
+  border-radius: 12px;
 }
 
 #input {
-  margin: 15px;
+  margin: 5px 20px;
   border: 2px solid @mauve;
   border-radius: 10px;
-  color: @lavender;
-  background: rgb(30,30,46);
+  color: @fg;
+  background-color: @black3;
 }
 
 #input:focus {
-  background: rgb(48,45,65);
+  background-color: @bg-hover;
 }
 
 #input:focus image {
@@ -46,23 +55,7 @@
 }
 
 #input image {
-	color: @lavender;
-}
-
-#inner-box {
-  margin: 5px;
-  border: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 7px;
-  background-color: inherit;
-}
-
-#outer-box {
-  margin: 5px;
-  border: none;
-  background-color: inherit;
-  border-radius: 7px;
+  color: @lavender;
 }
 
 #scroll {
@@ -77,12 +70,12 @@
 } 
 
 #entry:selected {
-	border-radius: 10px;
- background: rgb(201,203,255);
+  border-radius: 10px;
+  background-color: @black4;
 }
 
 #text:selected {
-	background-color: inherit;
-	color: @dark-fg;
-	font-weight: normal;
+  background-color: inherit;
+  color: @fg;
+  font-weight: normal;
 }
