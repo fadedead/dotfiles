@@ -2,13 +2,12 @@
 
 shutdown="  Shutdown"
 reboot="󰜉  Reboot"
-suspend="󰤄  Suspend"
 lock="  Lock"
 logout="󰍃  Logout"
 
-options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
+options="$lock\n$logout\n$reboot\n$shutdown"
 
-selected=$(echo -e "$options" | wofi --dmenu --cache-file /dev/null --prompt "Power Menu" --width 200 --height 220 --style ${HOME}/.config/wofi/style.css)
+selected=$(echo -e "$options" | wofi --dmenu --cache-file /dev/null --prompt "Power Menu" --width 200 --height 190 --style ${HOME}/.config/wofi/style.css)
 
 case $selected in
     "$shutdown")
@@ -17,13 +16,10 @@ case $selected in
     "$reboot")
         systemctl reboot
         ;;
-    "$suspend")
-        systemctl suspend
-        ;;
     "$lock")
-        loginctl lock-session
+        hyprlock
         ;;
     "$logout")
-        hyprctl dispatch exit
+        loginctl terminate-user $USER
         ;;
 esac
