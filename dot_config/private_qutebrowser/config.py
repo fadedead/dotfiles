@@ -70,6 +70,7 @@ c.fonts.completion.entry = c.fonts.completion.category = font_default
 
 # Security & Optimization
 c.auto_save.session = True
+c.startup.session = "default"
 c.content.autoplay = False
 c.content.blocking.enabled, c.content.blocking.method = True, 'both'
 c.content.blocking.adblock.lists = [
