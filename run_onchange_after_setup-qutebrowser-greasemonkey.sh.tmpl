@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Define the source greasemonkey directory (managed by chezmoi in .config)
+SOURCE_DIR="$HOME/.config/qutebrowser/greasemonkey"
+
+# Define the target data directory based on OS using chezmoi template logic
+{{- if eq .chezmoi.os "linux" }}
+TARGET_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey"
+{{- else if eq .chezmoi.os "darwin" }}
+TARGET_DIR="$HOME/Library/Application Support/qutebrowser/greasemonkey"
+{{- else }}
+# Skip for other OS
+exit 0
+{{- end }}
+
+# Create target parent directories if they don't exist
+mkdir -p "$(dirname "$TARGET_DIR")"
+
+# Symlink the entire greasemonkey folder
+# If TARGET_DIR is a directory but not a symlink, and it's empty, we can remove it.
+if [ -d "$TARGET_DIR" ] && [ ! -L "$TARGET_DIR" ]; then
+    # Only remove if it's empty or we are sure we want to overwrite
+    rmdir "$TARGET_DIR" 2>/dev/null || { echo "Warning: $TARGET_DIR is a non-empty directory, skipping symlink creation"; exit 0; }
+fi
+
+if [ ! -e "$TARGET_DIR" ]; then
+    ln -sf "$SOURCE_DIR" "$TARGET_DIR"
+    echo "Symlinked Greasemonkey directory to $TARGET_DIR"
+fi
