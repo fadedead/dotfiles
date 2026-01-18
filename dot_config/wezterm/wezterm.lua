@@ -112,11 +112,15 @@ config.keys = {
 	{ key = 'Enter', mods = 'ALT',       action = act.SpawnTab 'CurrentPaneDomain' },
 	{ key = 'v',     mods = 'ALT',       action = act.ActivateCopyMode },
 	{ key = 't',     mods = 'ALT|SHIFT', action = wezterm.action.ShowLauncherArgs { flags = 'TABS' } },
+
+	-- Panes
 	{ key = 'w',     mods = 'ALT',       action = act.CloseCurrentPane({ confirm = true }) },
 	{ key = 'h',     mods = 'ALT|SHIFT', action = wezterm.action.SplitPane { direction = 'Left', size = { Percent = 50 }, } },
 	{ key = 'j',     mods = 'ALT|SHIFT', action = wezterm.action.SplitPane { direction = 'Down', size = { Percent = 50 }, } },
 	{ key = 'k',     mods = 'ALT|SHIFT', action = wezterm.action.SplitPane { direction = 'Up', size = { Percent = 50 }, } },
 	{ key = 'l',     mods = 'ALT|SHIFT', action = wezterm.action.SplitPane { direction = 'Right', size = { Percent = 50 }, } },
+
+	-- Tabs (vim navigation)
 	{ key = 'h',     mods = 'ALT',       action = act.ActivateTabRelative(-1) },
 	{ key = 'l',     mods = 'ALT',       action = act.ActivateTabRelative(1) },
 	{ key = 'q',     mods = 'ALT',       action = act.CloseCurrentTab({ confirm = true }) },
@@ -125,9 +129,19 @@ config.keys = {
 	{ key = '3',     mods = 'ALT',       action = act.ActivateTab(2) },
 	{ key = '4',     mods = 'ALT',       action = act.ActivateTab(3) },
 	{ key = '5',     mods = 'ALT',       action = act.ActivateTab(4) },
+
+	-- Workspaces (vim navigation)
 	{ key = 'j',     mods = 'ALT',       action = act.SwitchWorkspaceRelative(1) },
 	{ key = 'k',     mods = 'ALT',       action = act.SwitchWorkspaceRelative(-1) },
 	{ key = 'f',     mods = 'ALT',       action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
+	{ key = 'Enter', mods = 'ALT|SHIFT', action = act.PromptInputLine {
+		description = 'Enter workspace name:',
+		action = wezterm.action_callback(function(window, pane, line)
+			if line then
+				window:perform_action(act.SwitchToWorkspace { name = line }, pane)
+			end
+		end),
+    }},
 }
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
