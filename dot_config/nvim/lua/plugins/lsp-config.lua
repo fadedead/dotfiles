@@ -1,147 +1,106 @@
 return {
     {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    {
         "williamboman/mason.nvim",
-        config = function()
-            require("mason").setup()
-        end,
+        lazy = false,
+        config = true,
     },
     {
         "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "html", "ts_ls", "cssls", "pyright", "emmet_ls", "tailwindcss", "terraformls", "gopls", "golangci_lint_ls" },
-            })
-        end,
+        lazy = false,
+        opts = {
+            ensure_installed = {
+                "lua_ls", "html", "ts_ls", "cssls", "pyright",
+                "emmet_ls", "tailwindcss", "terraformls", "gopls",
+                "golangci_lint_ls"
+            },
+        },
     },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        config = function()
-            require("mason-tool-installer").setup({
-                ensure_installed = { "prettierd", "eslint_d", "debugpy", "black", "isort", "pylint", "tflint", "golangci-lint", "golangci-lint-langserver", "delve", "gofumpt", "goimports" },
-            })
-        end,
+        opts = {
+            ensure_installed = {
+                "prettierd", "eslint_d", "debugpy", "black", "isort",
+                "pylint", "tflint", "golangci-lint", "golangci-lint-langserver",
+                "delve", "gofumpt", "goimports", "selene", "stylua"
+            },
+        },
     },
     {
         "neovim/nvim-lspconfig",
+        dependencies = { "saghen/blink.cmp" },
         config = function()
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-            vim.lsp.enable("lua_ls")
-            vim.lsp.config("lua_ls", {
-                capabilities = capabilities,
+            -- 1. Setup Defaults (Keymaps & UI)
+            vim.lsp.config("*", {
+                root_markers = { ".git", "lua", "init.lua" },
             })
 
-            vim.lsp.enable("ts_ls")
-            vim.lsp.config("ts_ls", {
-                capabilities = capabilities,
-                root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+            -- 2. Define Custom Server Configurations
+            
+            -- LUA
+            vim.lsp.config("lua_ls", {
                 settings = {
-                    typescript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = "all",
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
+                    Lua = {
+                        runtime = { version = "LuaJIT" },
+                        workspace = {
+                            checkThirdParty = false,
+                            library = {
+                                -- Neovim runtime and plugin types are handled by lazydev.nvim
+                            },
                         },
-                    },
-                    javascript = {
-                        inlayHints = {
-                            includeInlayParameterNameHints = "all",
-                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                            includeInlayFunctionParameterTypeHints = true,
-                            includeInlayVariableTypeHints = true,
-                            includeInlayPropertyDeclarationTypeHints = true,
-                            includeInlayFunctionLikeReturnTypeHints = true,
-                            includeInlayEnumMemberValueHints = true,
-                        },
+                        completion = { callSnippet = "Replace" },
                     },
                 },
             })
 
-            vim.lsp.enable("html")
-            vim.lsp.config("html", {
-                capabilities = capabilities,
+            -- TYPESCRIPT
+            vim.lsp.config("ts_ls", {
+                root_markers = { "package.json", "tsconfig.json", ".git" },
             })
 
-            vim.lsp.enable("cssls")
-            vim.lsp.config("cssls", {
-                capabilities = capabilities,
-            })
-
-            vim.lsp.enable("emmet_ls")
-            vim.lsp.config("emmet_ls", {
-                capabilities = capabilities,
-            })
-
-            vim.lsp.enable("tailwindcss")
-            vim.lsp.config("tailwindcss", {
-                capabilities = capabilities,
-            })
-
-            vim.lsp.enable("pyright")
+            -- PYTHON
             vim.lsp.config("pyright", {
-                capabilities = capabilities,
                 settings = {
                     python = {
                         analysis = {
                             autoSearchPaths = true,
                             useLibraryCodeForTypes = true,
-                            diagnosticMode = "workspace",
                             typeCheckingMode = "basic",
                         },
                     },
                 },
-                on_init = function(client)
-                    local venv_path = vim.fn.getcwd() .. "/.venv"
-                    local env_path = vim.fn.getcwd() .. "/venv"
-                    local conda_env = vim.fn.getenv("CONDA_PREFIX")
-
-                    if vim.fn.isdirectory(venv_path) == 1 then
-                        client.config.settings.python.pythonPath = venv_path .. "/bin/python"
-                    elseif vim.fn.isdirectory(env_path) == 1 then
-                        client.config.settings.python.pythonPath = env_path .. "/bin/python"
-                    elseif conda_env ~= vim.NIL and conda_env ~= "" then
-                        client.config.settings.python.pythonPath = conda_env .. "/bin/python"
-                    end
-                end,
             })
 
-            vim.lsp.enable("terraformls")
-            vim.lsp.config("terraformls", {
-                capabilities = capabilities,
-                filetypes = { "terraform", "tf", "hcl" },
-            })
-
-            vim.lsp.enable("gopls")
+            -- GO
             vim.lsp.config("gopls", {
-                capabilities = capabilities,
                 settings = {
                     gopls = {
                         completeUnimported = true,
                         usePlaceholders = true,
-                        analyses = {
-                            unusedparams = true,
-                            unreachable = true,
-                        },
+                        analyses = { unusedparams = true, unreachable = true },
                     },
                 },
             })
 
-            vim.lsp.enable("golangci_lint_ls")
-            vim.lsp.config("golangci_lint_ls", {
-                capabilities = capabilities,
-            })
-
-            vim.keymap.set("n", "<leader>ch", vim.lsp.buf.hover, { desc = "[C]ode [H]over" })
-            vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "[C]ode [D]efinition" })
-            vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
-            vim.keymap.set("n", "<leader>cr", function() Snacks.picker.lsp_references() end, { desc = "[C]ode [R]eferences" })
-            vim.keymap.set("n", "<leader>ci", function() Snacks.picker.lsp_implementations() end, { desc = "[C]ode [I]mplementations" })
-            vim.keymap.set("n", "<leader>cR", vim.lsp.buf.rename, { desc = "[C]ode [R]ename" })
-            vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "[C]ode [D]eclaration" })
+            -- 3. Enable All Servers
+            local servers = {
+                "lua_ls", "html", "ts_ls", "cssls", "pyright", "emmet_ls",
+                "tailwindcss", "terraformls", "gopls", "golangci_lint_ls"
+            }
+            
+            for _, server in ipairs(servers) do
+                vim.lsp.enable(server)
+            end
         end,
     },
 }

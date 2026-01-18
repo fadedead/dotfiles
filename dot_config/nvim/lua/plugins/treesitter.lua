@@ -3,7 +3,7 @@ return {
     dependencies = { "windwp/nvim-ts-autotag" },
     build = ":TSUpdate",
     config = function()
-        require("nvim-treesitter.configs").setup({
+        require("nvim-treesitter").setup({
             ensure_installed = {
                 "vim",
                 "vimdoc",
@@ -21,7 +21,7 @@ return {
                 "go",
             },
             highlight = { enable = true },
-            autotag = { enable = true },
         })
+        require("nvim-ts-autotag").setup()
     end,
 }
