@@ -81,8 +81,8 @@ c.content.blocking.adblock.lists = [
 ]
 c.content.cookies.accept, c.content.headers.do_not_track = 'no-3rdparty', True
 c.content.canvas_reading, c.content.webgl = False, False
-c.content.geolocation, c.content.notifications.enabled = False, False
-c.content.media.audio_capture, c.content.media.video_capture = False, False
+c.content.geolocation, c.content.notifications.enabled = True, True
+c.content.media.audio_capture, c.content.media.video_capture = True, True
 c.content.media.audio_video_capture, c.content.desktop_capture = False, False
 c.content.mouse_lock, c.content.pdfjs, c.content.dns_prefetch = False, True, True
 c.content.javascript.can_open_tabs_automatically = False
