@@ -58,6 +58,7 @@ c.fonts.statusbar = c.fonts.tabs.selected = c.fonts.tabs.unselected = '10pt "Jet
 
 # Security & Optimization
 c.auto_save.session = True
+c.content.autoplay = False
 c.content.blocking.enabled, c.content.blocking.method = True, 'both'
 c.content.blocking.adblock.lists = [
     "https://easylist.to/easylist/easylist.txt",
@@ -87,9 +88,11 @@ config.bind('<Space>sg', 'set completion.open_categories ["history"] ;; cmd-set-
 config.bind('<Space>o', 'set completion.open_categories [] ;; cmd-set-text -s :open -s')
 config.bind('<Space>hl', 'set completion.open_categories ["bookmarks"] ;; cmd-set-text -s :open -s -t ')
 config.bind('<Space>ha', 'bookmark-add')
+config.bind('<Space>hp', 'tab-pin')
 config.bind('<Space>j', 'forward')
 config.bind('<Space>l', 'back')
 config.bind('<Space>T', 'config-cycle tabs.position left top')
+config.bind('<Space>i', 'devtools')
 config.bind('<Space>gr', 'greasemonkey-reload')
 for i in range(1, 10): config.bind(f'<Space>{i}', f'tab-focus {i}')
 config.bind('<Space>wv', 'cmd-set-text -s :open -w')
