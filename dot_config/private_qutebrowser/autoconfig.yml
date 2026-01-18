@@ -6,6 +6,11 @@
 
 config_version: 2
 settings:
+  completion.open_categories:
+    global:
+    - history
+  content.notifications.enabled:
+    https://web.whatsapp.com: true
   statusbar.show:
     global: always
   tabs.show:

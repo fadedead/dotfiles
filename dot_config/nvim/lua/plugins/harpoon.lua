@@ -25,6 +25,5 @@ return {
             },
         })
 
-        require("telescope").load_extension("harpoon")
     end,
 }
