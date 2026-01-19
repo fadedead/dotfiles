@@ -1,0 +1,45 @@
+gui:
+  nerdFontsVersion: "3"
+  showFileTree: true
+  showIcons: true
+  showListFooter: true
+  sidePanelWidth: 0.33
+  expandFocusedSidePanel: false
+  # Layout
+  mainPanelSplitMode: "flexible"
+  # Make it look modern
+  border: "rounded"
+  theme:
+    activeBorderColor:
+      - "#c47fd5" # Duskfox Purple/Magenta
+      - bold
+    inactiveBorderColor:
+      - "#569fba" # Duskfox Blue
+    optionsTextColor:
+      - "#908caa" # Subtext
+    selectedLineBgColor:
+      - "#2b3b51" # Selection Background
+    selectedRangeBgColor:
+      - "#2b3b51"
+    cherryPickedCommitBgColor:
+      - "#c47fd5"
+    cherryPickedCommitFgColor:
+      - "#000000"
+    unstagedChangesColor:
+      - "#eb6f92" # Pink/Red
+    defaultFgColor:
+      - "#e0def4" # Main Text
+    searchingActiveBorderColor:
+      - "#f6c177" # Yellow/Gold
+git:
+  pagers:
+    - colorArg: always
+      useConfig: false
+  commit:
+    signOff: false
+  merging:
+    manualCommit: false
+update:
+  method: never
+disableStartupPopups: true
+promptToReturnFromSubprocess: false

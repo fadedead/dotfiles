@@ -9,7 +9,20 @@ return {
     {
         "tpope/vim-fugitive",
         config = function()
-            vim.keymap.set("n", "<leader>gb", ":Git blame<cr>", { desc = "[G]it [B]lame" })
+            vim.keymap.set("n", "<leader>gb", function()
+                local found = false
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    local buf = vim.api.nvim_win_get_buf(win)
+                    if vim.bo[buf].filetype == "fugitiveblame" then
+                        vim.api.nvim_win_close(win, true)
+                        found = true
+                        break
+                    end
+                end
+                if not found then
+                    vim.cmd("Git blame")
+                end
+            end, { desc = "[G]it [B]lame Toggle" })
             vim.keymap.set("n", "<leader>gA", ":Git add .<cr>", { desc = "[G]it Add [A]ll" })
             vim.keymap.set("n", "<leader>ga", ":Git add<cr>", { desc = "[G]it [A]dd" })
             vim.keymap.set("n", "<leader>gC", ":Git commit<cr>", { desc = "[G]it [C]ommit" })

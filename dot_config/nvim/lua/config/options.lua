@@ -42,3 +42,6 @@ vim.diagnostic.config({
     underline = true,
     severity_sort = true,
 })
+
+-- Lazygit configuration
+vim.env.LG_CONFIG_FILE = vim.fn.stdpath("config") .. "/lazygit.yml"

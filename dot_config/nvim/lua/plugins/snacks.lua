@@ -31,6 +31,13 @@ return {
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
+		styles = {
+			lazygit = {
+				width = 0,
+				height = 0,
+				border = "rounded",
+			},
+		},
 	},
 	keys = {
 		-- Top Pickers & Explorer
@@ -42,10 +49,8 @@ return {
 		{ "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
 		{ "<leader>f", function() Snacks.explorer() end, desc = "File Explorer" },
 		-- Git
-		{ "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-		{ "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+		{ "<leader>gl", function() Snacks.lazygit() end, desc = "Lazygit" },
 		{ "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
-		{ "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (CWD)" },
 		-- Other
 		{ "<leader>z", function() Snacks.zen() end, desc = "Toggle Zen Mode" },
 		{ "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
