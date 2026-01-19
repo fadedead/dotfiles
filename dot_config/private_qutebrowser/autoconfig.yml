@@ -7,9 +7,4 @@
 config_version: 2
 settings:
   completion.open_categories:
-    global:
-    - bookmarks
-  statusbar.show:
-    global: never
-  tabs.show:
-    global: never
+    global: []

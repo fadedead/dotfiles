@@ -7,18 +7,17 @@ gui:
   expandFocusedSidePanel: false
   # Layout
   mainPanelSplitMode: "flexible"
-  # Make it look modern
   border: "rounded"
   theme:
     activeBorderColor:
-      - "#c47fd5" # Duskfox Purple/Magenta
+      - "#c47fd5"
       - bold
     inactiveBorderColor:
-      - "#569fba" # Duskfox Blue
+      - "#569fba"
     optionsTextColor:
-      - "#908caa" # Subtext
+      - "#908caa"
     selectedLineBgColor:
-      - "#2b3b51" # Selection Background
+      - "#2b3b51"
     selectedRangeBgColor:
       - "#2b3b51"
     cherryPickedCommitBgColor:
@@ -26,11 +25,11 @@ gui:
     cherryPickedCommitFgColor:
       - "#000000"
     unstagedChangesColor:
-      - "#eb6f92" # Pink/Red
+      - "#eb6f92"
     defaultFgColor:
-      - "#e0def4" # Main Text
+      - "#e0def4"
     searchingActiveBorderColor:
-      - "#f6c177" # Yellow/Gold
+      - "#f6c177"
 git:
   pagers:
     - colorArg: always

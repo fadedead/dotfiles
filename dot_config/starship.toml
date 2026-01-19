@@ -20,5 +20,14 @@ format = "on [$symbol$branch]($style) "
 style = "bold magenta"
 format = "([$all_status$ahead_behind]($style) )"
 
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[azure]
+disabled = true
+
 [line_break]
 disabled = true
