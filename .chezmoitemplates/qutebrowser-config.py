@@ -105,6 +105,7 @@ c.content.blocking.adblock.lists = [
 c.content.cookies.accept, c.content.headers.do_not_track = "no-3rdparty", True
 c.content.canvas_reading, c.content.webgl = False, False
 c.content.mouse_lock, c.content.pdfjs, c.content.dns_prefetch = False, True, True
+c.content.javascript.enabled = False
 c.content.javascript.can_open_tabs_automatically = False
 c.content.headers.referer = "same-domain"
 c.colors.webpage.darkmode.enabled = True
@@ -133,6 +134,7 @@ config.bind("<Space>j", "forward")
 config.bind("<Space>k", "back")
 config.bind("<Space>i", "devtools")
 config.bind("<Space>gr", "greasemonkey-reload")
+config.bind("<Space>ej", "set -u {url:host} content.javascript.enabled true ;; reload")
 for i in range(1, 10):
     config.bind(f"<Space>{i}", f"tab-focus {i}")
 config.bind("<Space>nw", "open -w")
